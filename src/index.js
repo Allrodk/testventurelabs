@@ -1,16 +1,34 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { GlobalStyle } from "./styles/global";
+import { Main, Section } from "./IndexStyles";
+import SideBar from "./components/SideBar/SideBar";
+import Title from "./components/Title/Title";
+import Detail from "./pages/Detail/Detail";
+import Register from "./pages/Register/Register";
 import ClientList from "./pages/ClientList/ClientList";
-import Navbar from "./components/Navbar/Navbar";
+
+import axios from "axios";
+
+axios.defaults.baseURL = "https://api-mongodb-test.herokuapp.com";
+axios.defaults.headers.post["Content-Type"] = "application/json";
 
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
-      <Navbar />
-      <Routes>
-        <Route path="/client/list" element={<ClientList />} />
-      </Routes>
+      <GlobalStyle />
+      <Main>
+        <SideBar />
+        <Section>
+          <Title />
+          <Routes>
+            <Route path="/register" element={<Register />} />
+            <Route path="/list" element={<ClientList />} />
+            <Route path="/detail" element={<Detail />} />
+          </Routes>
+        </Section>
+      </Main>
     </BrowserRouter>
   </React.StrictMode>,
   document.getElementById("root")

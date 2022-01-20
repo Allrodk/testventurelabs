@@ -1,10 +1,14 @@
+import { useNavigate } from "react-router-dom";
 import { Container, Item, Square } from "./Styles";
 
 export default function ClientList(props) {
-  function handleClick() {}
+  const navigate = useNavigate();
+  function handleClick() {
+    navigate("/detail", { state: props.id });
+  }
   return (
     <Container>
-      <Item onClick={handleClick}>
+      <Item onClick={handleClick}>        
         <Square>
           <p>{props.name}</p>
         </Square>
