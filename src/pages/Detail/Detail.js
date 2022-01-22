@@ -21,12 +21,11 @@ export default function Detail() {
   const location = useLocation();
   const [client, setClient] = useState({});
   const [mounted, setMounted] = useState(false);
-  const [indexSet, setIndexSet] = useState(0);
   const [indexNow, setIndexNow] = useState(0);
   const [listClient, setListClient] = useState([]);
+  let indexSet = 0;
 
   async function setData(resp) {
-    console.log(resp);
     resp.phone = Phone(resp.phone);
     resp.zipCode = Zipcode(resp.zipCode);
     resp.birthDate = FormatDate(resp.birthDate);
@@ -52,8 +51,7 @@ export default function Detail() {
         });
       });
     } else {
-      console.log(indexNow + indexSet);
-      if (indexNow + indexSet > 0) {
+      if (indexNow + indexSet >= 0) {
         if (indexNow + indexSet < listClient.length) {
           setData(listClient[indexNow + indexSet]);
           setClient(listClient[indexNow + indexSet]);
@@ -73,13 +71,13 @@ export default function Detail() {
     navigate("/list");
   }
 
-  const handleBack = async () => {
-    setIndexSet(-1);
+  function handleBack() {
+    indexSet = -1;
     getData();
-  };
+  }
 
   function handleNext() {
-    setIndexSet(1);
+    indexSet = 1;
     getData();
   }
 
@@ -143,7 +141,7 @@ export default function Detail() {
       </Main>
       <Qtd>
         {"Exibindo: "}
-        {indexNow + indexSet + 1}/{listClient.length + 1}
+        {indexNow + 1}/{listClient.length}
       </Qtd>
     </Container>
   );

@@ -104,7 +104,7 @@ export function CPF(e) {
 }
 
 export function FormatDate(e) {
-  let data = new Date(e),
+  let data = new Date(e),  
     dia = data.getDate().toString(),
     diaF = dia.length === 1 ? "0" + dia : dia,
     mes = (data.getMonth() + 1).toString(),
