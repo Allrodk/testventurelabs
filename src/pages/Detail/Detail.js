@@ -9,12 +9,11 @@ import {
 } from "./Styles";
 
 import { useLocation, useNavigate } from "react-router-dom";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Phone, Zipcode, CPF, FormatDate } from "../../utils/Masks";
 import { FaArrowAltCircleLeft, FaArrowAltCircleRight } from "react-icons/fa";
 
 import axios from "axios";
-import { response } from "express";
 
 export default function Detail() {
   const navigate = useNavigate();
@@ -56,23 +55,23 @@ export default function Detail() {
   }
 
   const getData = async () => {
-    await axios.get("findAll").then(async (response) => {
-      setListClient(await response.data);
-      setIndexNow(await location.state);
-      console.log(`Buscou: ${await response.data}`);
+    await axios.get("findAll").then((response) => {
+      setListClient(response.data);
+      setIndexNow( location.state);
+      console.log(`Buscou: ${ response.data}`);
     });
     // return response.data;
   };
 
   const handleBack = async () => {
-    await getData();
+    getData();
     console.log(indexNow);
     console.log(listClient);
 
     // await Promise.All(
     listClient.map(async (el, index) => {
-      if ((await listClient[index]._id) === (await indexNow)) {
-        console.log(await indexNow);
+      if ((await listClient[index]._id) === ( indexNow)) {
+        console.log(indexNow);
         console.log(await listClient[index]);
         setIndexNow(await listClient[index - 1]);
       }
