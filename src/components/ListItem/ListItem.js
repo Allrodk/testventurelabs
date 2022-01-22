@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { Container, Item, Square } from "./Styles";
+import { Container, Item } from "./Styles";
 
 export default function ClientList(props) {
   const navigate = useNavigate();
@@ -8,10 +8,8 @@ export default function ClientList(props) {
   }
   return (
     <Container>
-      <Item onClick={handleClick}>        
-        <Square>
-          <p>{props.name}</p>
-        </Square>
+      <Item onClick={handleClick}>
+        <p>{props.name}</p>
         <h2>{props.email}</h2>
       </Item>
     </Container>

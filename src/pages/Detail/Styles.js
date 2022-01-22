@@ -23,6 +23,21 @@ export const SubContainer = styled.div`
   flex-direction: column;
   gap: 0.5rem;
 `;
+
+export const Main = styled.div`
+  display: flex;
+  gap: 2rem;
+  a {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    font-size: 3rem;
+  }
+  a:hover {
+    cursor: pointer;
+  }
+`;
+
 export const Item = styled.div`
   display: flex;
   flex-direction: column;

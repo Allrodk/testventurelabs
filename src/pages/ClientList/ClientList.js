@@ -4,12 +4,12 @@ import axios from "axios";
 import { Container } from "./Styles";
 
 export default function ClientList() {
-  const [userList, setUserList] = useState([]);
+  const [clientList, setClientList] = useState([]);
   const [mounted, setMounted] = useState(false);
 
   const getData = async () => {
     await axios.get("findAll").then((response) => {
-      setUserList(response.data);
+      setClientList(response.data);
     });
   };
   useEffect(() => {
@@ -19,12 +19,12 @@ export default function ClientList() {
 
   return (
     <Container>
-      {userList.map((user) => (
+      {clientList.map((client) => (
         <ListItem
-          key={user._id}
-          id={user._id}
-          name={user.name}
-          email={user.email}
+          key={client._id}
+          id={client._id}
+          name={client.name}
+          email={client.email}
         />
       ))}
     </Container>

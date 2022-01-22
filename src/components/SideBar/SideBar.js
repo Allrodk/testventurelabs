@@ -1,4 +1,12 @@
-import { Container, Logo, Links, List, ListItem, Hamburger } from "./Styles";
+import {
+  Container,
+  Logo,
+  Square,
+  Links,
+  List,
+  ListItem,
+  Hamburger,
+} from "./Styles";
 import { useEffect, useState } from "react";
 
 export default function Sidebar() {
@@ -45,7 +53,7 @@ export default function Sidebar() {
   const handleMouseOut = () => {
     setOpen(false);
   };
-  
+
   const handleClick = () => {
     setOpen(false);
   };
@@ -66,19 +74,16 @@ export default function Sidebar() {
           onMouseOut={handleMouseOut}
         >
           <Logo href="/">
-            <span>Bemvindo!</span>
+            <span>Bem-vindo!</span>
           </Logo>
-          {/* Cria lista de menu  */}
           {menu.map((item) => {
             return (
               <ListItem onClick={handleClick} key={item.link.toString()}>
-                <a href={item.href}>
-                  {/* <img
-                    src={require(`../../images/${item.icon}`)}
-                    alt={item.link}
-                  /> */}
-                  <span>{item.link}</span>
-                </a>
+                <Square>
+                  <a href={item.href}>
+                    <span>{item.link}</span>
+                  </a>
+                </Square>
               </ListItem>
             );
           })}

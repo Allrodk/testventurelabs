@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const Container = styled.div`
   position: fixed;
-  background-color: Silver;
+  background-color: #414040;
   margin: 0;
   padding: 0;
   height: 100vh;
@@ -39,22 +39,21 @@ export const Logo = styled.a`
   }
 `;
 
-export const List = styled.ul` 
+export const List = styled.ul`
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: Silver;
+  background-color: #414040;
   height: 100vh;
   border-radius: 0 10px 0 0;
   gap: 0.8rem;
 
   @media (max-width: 600px) {
-    position: fixed;      
-    flex-direction: column;   
-    gap: 1rem;    
+    position: fixed;
+    gap: 1rem;
     width: 15rem;
     top: 1%;
-    height: 98%;  
+    height: 98%;
     padding: 1.2rem 0;
     font-weight: bold;
     border-radius: 10px;
@@ -66,6 +65,15 @@ export const List = styled.ul`
     right: ${(props) => (props.active ? "30px" : "-100%")};
     z-index: 10;
   }
+`;
+
+export const Square = styled.div`
+  background-color: #2193d1;
+  padding: 0.2rem 0.5rem;
+  border-radius: 0.5rem;
+  color: #fff;
+  font-size: 1.2em;
+  width: 10rem; ;
 `;
 
 export const ListItem = styled.li`
@@ -82,7 +90,7 @@ export const ListItem = styled.li`
   a {
     display: flex;
     gap: 0.1rem;
-    color: black;
+    color: #fff;
     text-decoration: none;
   }
 `;

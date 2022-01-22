@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Input from "../../components/Input/Input";
 
 import axios from "axios";
 import {
@@ -14,6 +15,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import { Modal } from "react-responsive-modal";
 import "react-responsive-modal/styles.css";
+import { Real } from "../../utils/Masks";
 
 export default function Register() {
   const navigate = useNavigate();
@@ -32,10 +34,17 @@ export default function Register() {
     address2: "",
     birthDate: "",
     cpf: "",
-    rendaMensal: 0,
+    rendaMensal: "",
   });
 
   function handleSubmit(event) {
+    event.preventDefault();
+
+    let r = formValues.rendaMensal.toString().replace("R$", "");
+    r = r.replace(".", "");
+    r = r.replace(",", ".");
+    formValues.rendaMensal = parseFloat(r);
+
     const client = {
       name: formValues.name,
       lastName: formValues.lastname,
@@ -46,10 +55,9 @@ export default function Register() {
       address2: formValues.address2,
       birthDate: formValues.birthDate,
       cpf: formValues.cpf,
-      rendaMensal: parseFloat(formValues.rendaMensal),
+      rendaMensal: formValues.rendaMensal,
     };
 
-    event.preventDefault();
     if (step === 2) {
       setButton("Enviar");
     }
@@ -59,12 +67,13 @@ export default function Register() {
       axios
         .post("/create", client)
         .then((response) => {
-          setMessage("Usuário cadastrado com sucesso");
+          setMessage("Usuário cadastrado com sucesso!");
           setOpenMsg(true);
-          navigate("/");
         })
         .catch((error) => {
-          setMessage(error.response.data.message);
+          setMessage(
+            "Algum campo não foi prenchido corretamente. Por favor, revise e envie novamente."
+          );
           setOpenMsg(true);
         });
     }
@@ -72,7 +81,6 @@ export default function Register() {
 
   function handleInputChange(event) {
     const { id, value } = event.target;
-
     setFormValues((prev) => ({
       ...prev,
       [id]: value,
@@ -82,8 +90,15 @@ export default function Register() {
   function fechaModal() {
     if (openMsg) {
       setOpenMsg(false);
+      setStep(1);
+      setButton("próximo");
+      navigate("/register");
+      if (message.match("sucesso")) {
+        window.location.reload();
+      }
     }
   }
+
   return (
     <Container>
       <SubContainer>
@@ -98,6 +113,7 @@ export default function Register() {
                 <input
                   type="text"
                   id="name"
+                  defaultValue={formValues.name}
                   onChange={handleInputChange}
                   required
                 ></input>
@@ -107,6 +123,7 @@ export default function Register() {
                 <input
                   type="text"
                   id="lastname"
+                  defaultValue={formValues.lastname}
                   onChange={handleInputChange}
                   required
                 ></input>
@@ -116,18 +133,21 @@ export default function Register() {
                 <input
                   type="text"
                   id="email"
+                  defaultValue={formValues.email}
                   onChange={handleInputChange}
                   required
                 ></input>
               </FormItem>
               <FormItem>
                 <label htmlFor="phone">Telefone</label>
-                <input
-                  type="number"
+                <Input
+                  type="text"
                   id="phone"
-                  onChange={handleInputChange}
+                  mask="Phone"
+                  defaultValue={formValues.phone}
+                  inputMaskChange={handleInputChange}
                   required
-                ></input>
+                ></Input>
               </FormItem>
               <FormItem>
                 <Button>
@@ -139,18 +159,21 @@ export default function Register() {
             <>
               <FormItem>
                 <label htmlFor="zipCode">CEP</label>
-                <input
-                  type="number"
+                <Input
+                  type="text"
                   id="zipCode"
-                  onChange={handleInputChange}
+                  mask="Zipcode"
+                  defaultValue={formValues.zipCode}
+                  inputMaskChange={handleInputChange}
                   required
-                ></input>
+                ></Input>
               </FormItem>
               <FormItem>
                 <label htmlFor="address1">Endereço 1</label>
                 <input
                   type="text"
                   id="address1"
+                  defaultValue={formValues.address1}
                   onChange={handleInputChange}
                   required
                 ></input>
@@ -160,6 +183,7 @@ export default function Register() {
                 <input
                   type="text"
                   id="address2"
+                  defaultValue={formValues.address2}
                   onChange={handleInputChange}
                   required
                 ></input>
@@ -177,28 +201,33 @@ export default function Register() {
                 <input
                   type="date"
                   id="birthDate"
+                  defaultValue={formValues.birthDate}
                   onChange={handleInputChange}
                   required
                 ></input>
               </FormItem>
               <FormItem>
                 <label htmlFor="cpf">CPF</label>
-                <input
-                  type="number"
+                <Input
+                  type="text"
                   id="cpf"
-                  onChange={handleInputChange}
+                  mask="CPF"
+                  defaultValue={formValues.cpf}
+                  inputMaskChange={handleInputChange}
                   required
-                ></input>
+                ></Input>
               </FormItem>
               <FormItem>
                 <label htmlFor="rendaMensal">Renda Mensal</label>
-                <input
-                  type="number"
+                <Input
+                  type="text"
                   step="0.01"
                   id="rendaMensal"
-                  onChange={handleInputChange}
+                  mask="Real"
+                  defaultValue={Real(formValues.rendaMensal.toString())}
+                  inputMaskChange={handleInputChange}
                   required
-                ></input>
+                ></Input>
               </FormItem>
               <FormItem>
                 <Button>

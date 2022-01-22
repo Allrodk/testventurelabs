@@ -4,32 +4,27 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 1rem;
-  margin: 0.5rem 0.8rem 0.5rem;
+  gap: 0.5rem;
+  margin: 0.2rem 0.8rem 0.2rem;
   padding-left: 0.5rem;
   width: 100vw;
-  height: 3rem;
+  height: 2rem;
   border: 1px solid;
 `;
 export const Item = styled.div`
   display: flex;
   align-items: center;
+  padding: 0.25rem 1.3rem;
   gap: 1rem;
   width: 100%;
   text-decoration: none;
   color: #000;
-  h2 {
-    font-size: 1.4em;
+  h2,
+  p {
+    font-size: 1.2em;
   }
   &:hover {
     cursor: pointer;
     background-color: white;
   }
-`;
-export const Square = styled.div`
-  background-color: #2193d1;
-  padding: 0.2rem;
-  border-radius: 0.8rem;
-  color: #fff;
-  font-size: 1.8em;
 `;
