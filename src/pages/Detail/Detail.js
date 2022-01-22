@@ -6,6 +6,7 @@ import {
   Item,
   Button,
   BtnCancel,
+  Qtd,
 } from "./Styles";
 
 import { useLocation, useNavigate } from "react-router-dom";
@@ -20,21 +21,12 @@ export default function Detail() {
   const location = useLocation();
   const [client, setClient] = useState({});
   const [mounted, setMounted] = useState(false);
-  const [listClient, setListClient] = useState([]);
+  const [indexSet, setIndexSet] = useState(0);
   const [indexNow, setIndexNow] = useState(0);
+  const [listClient, setListClient] = useState([]);
 
-  async function handleInputChange() {
-    if (mounted) {
-      await axios.get(`/findOne/${location.state}`).then((response) => {
-        setData(response.data);
-        setClient(response.data);
-      });
-    }
-  }
-
-  async function setData(response) {
-    let resp = await response;
-    console.log(await response);
+  async function setData(resp) {
+    console.log(resp);
     resp.phone = Phone(resp.phone);
     resp.zipCode = Zipcode(resp.zipCode);
     resp.birthDate = FormatDate(resp.birthDate);
@@ -45,54 +37,50 @@ export default function Detail() {
     });
   }
 
+  const getData = async () => {
+    if (listClient.length < 1) {
+      await axios.get("/findAll").then((response) => {
+        let idNow = location.state;
+        response.data.map((item, index) => {
+          if (idNow === response.data[index]._id) {
+            setData(item);
+            setClient(item);
+            location.state = item._id;
+            setListClient(response.data);
+            setIndexNow(index);
+          }
+        });
+      });
+    } else {
+      console.log(indexNow + indexSet);
+      if (indexNow + indexSet > 0) {
+        if (indexNow + indexSet < listClient.length) {
+          setData(listClient[indexNow + indexSet]);
+          setClient(listClient[indexNow + indexSet]);
+          location.state = listClient[indexNow + indexSet]._id;
+          setIndexNow(indexNow + indexSet);
+        }
+      }
+    }
+  };
+
   useEffect(() => {
-    handleInputChange();
     setMounted(true);
+    getData();
   }, [mounted]);
 
   function handleReturn() {
     navigate("/list");
   }
 
-  const getData = async () => {
-    await axios.get("findAll").then((response) => {
-      setListClient(response.data);
-      setIndexNow( location.state);
-      console.log(`Buscou: ${ response.data}`);
-    });
-    // return response.data;
-  };
-
   const handleBack = async () => {
+    setIndexSet(-1);
     getData();
-    console.log(indexNow);
-    console.log(listClient);
-
-    // await Promise.All(
-    listClient.map(async (el, index) => {
-      if ((await listClient[index]._id) === ( indexNow)) {
-        console.log(indexNow);
-        console.log(await listClient[index]);
-        setIndexNow(await listClient[index - 1]);
-      }
-    });
-    // );
-
-    console.log(indexNow);
-    setData(await listClient[indexNow]);
-    setClient(await listClient[indexNow]);
   };
 
   function handleNext() {
-    // if (!listClient) {
-    //   getData();
-    // }
-    // listClient.map((item, index) => {
-    //   if ((listClient[index]._id = location.state)) {
-    //     location.state = listClient[index + 1]._id;
-    //     handleInputChange();
-    //   }
-    // });
+    setIndexSet(1);
+    getData();
   }
 
   return (
@@ -153,6 +141,10 @@ export default function Detail() {
           <FaArrowAltCircleRight />
         </a>
       </Main>
+      <Qtd>
+        {"Exibindo: "}
+        {indexNow + indexSet + 1}/{listClient.length + 1}
+      </Qtd>
     </Container>
   );
 }

@@ -69,3 +69,7 @@ export const BtnCancel = styled.input`
     background-color: red;
   }
 `;
+
+export const Qtd = styled.span`
+  margin-top: 2rem;
+`;
