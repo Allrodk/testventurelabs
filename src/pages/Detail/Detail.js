@@ -4,20 +4,17 @@ import {
   Main,
   Title,
   Item,
-  Button,
-  BtnCancel,
+  List,
+  ListItem,
   Qtd,
 } from "./Styles";
 
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { Phone, Zipcode, CPF, FormatDate } from "../../utils/Masks";
-import { FaArrowAltCircleLeft, FaArrowAltCircleRight } from "react-icons/fa";
-
 import axios from "axios";
 
 export default function Detail() {
-  const navigate = useNavigate();
   const location = useLocation();
   const [client, setClient] = useState({});
   const [mounted, setMounted] = useState(false);
@@ -26,6 +23,7 @@ export default function Detail() {
   let indexSet = 0;
 
   async function setData(resp) {
+    console.log(resp.birthDate)
     resp.phone = Phone(resp.phone);
     resp.zipCode = Zipcode(resp.zipCode);
     resp.birthDate = FormatDate(resp.birthDate);
@@ -41,13 +39,20 @@ export default function Detail() {
       await axios.get("/findAll").then((response) => {
         let idNow = location.state;
         response.data.map((item, index) => {
-          if (idNow === response.data[index]._id) {
-            setData(item);
-            setClient(item);
-            location.state = item._id;
-            setListClient(response.data);
-            setIndexNow(index);
+          if (idNow) {
+            if (idNow === response.data[index]._id) {
+              setData(item);
+              setClient(item);
+              location.state = item._id;
+              setIndexNow(index);
+            }
+          } else {
+            setData(response.data[0]);
+            setClient(response.data[0]);
+            location.state = response.data[0]._id;
+            setIndexNow(0);
           }
+          setListClient(response.data);
         });
       });
     } else {
@@ -67,8 +72,9 @@ export default function Detail() {
     getData();
   }, [mounted]);
 
-  function handleReturn() {
-    navigate("/list");
+  function handleFirst() {
+    indexSet = -indexNow;
+    getData();
   }
 
   function handleBack() {
@@ -81,15 +87,17 @@ export default function Detail() {
     getData();
   }
 
+  function handleLast() {
+    indexSet = listClient.length - indexNow - 1;    
+    getData();
+  }
+
   return (
     <Container>
       <Title>
         <h2>Cliente</h2>
       </Title>
-      <Main>
-        <a href="#foo" onClick={handleBack}>
-          <FaArrowAltCircleLeft />
-        </a>
+      <Main>       
         <SubContainer>
           <Item>
             <label>Nome:</label>
@@ -128,16 +136,22 @@ export default function Detail() {
           <Item>
             <label>Renda Mensal:</label>
             <span>{client.rendaMensal}</span>
-          </Item>
-          <Item>
-            <Button>
-              <BtnCancel type="submit" value="Voltar" onClick={handleReturn} />
-            </Button>
-          </Item>
+          </Item>         
         </SubContainer>
-        <a href="#foo" onClick={handleNext}>
-          <FaArrowAltCircleRight />
-        </a>
+        <List>
+          <ListItem key={1} onClick={handleFirst}>
+            Primeira
+          </ListItem>
+          <ListItem key={2} onClick={handleBack}>
+            Anterior
+          </ListItem>
+          <ListItem key={3} onClick={handleNext}>
+            Próxima
+          </ListItem>
+          <ListItem key={4} onClick={handleLast}>
+            Última
+          </ListItem>
+        </List>
       </Main>
       <Qtd>
         {"Exibindo: "}

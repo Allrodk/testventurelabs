@@ -20,7 +20,7 @@ import { Real } from "../../utils/Masks";
 export default function Register() {
   const navigate = useNavigate();
   const [step, setStep] = useState(1);
-  const [button, setButton] = useState("próximo");
+  const [button, setButton] = useState("Avançar");
   const [openMsg, setOpenMsg] = useState(false);
   const [message, setMessage] = useState();
 
@@ -67,12 +67,12 @@ export default function Register() {
       axios
         .post("/create", client)
         .then((response) => {
-          setMessage("Usuário cadastrado com sucesso!");
+          setMessage("Cliente cadastrado com sucesso!");
           setOpenMsg(true);
         })
         .catch((error) => {
           setMessage(
-            "Algum campo não foi prenchido corretamente. Por favor, revise e envie novamente."
+            "Algum campo não foi preenchido corretamente. Por favor, revise e envie novamente."
           );
           setOpenMsg(true);
         });
@@ -91,7 +91,7 @@ export default function Register() {
     if (openMsg) {
       setOpenMsg(false);
       setStep(1);
-      setButton("próximo");
+      setButton("Avançar");
       navigate("/register");
       if (message.match("sucesso")) {
         window.location.reload();

@@ -104,12 +104,13 @@ export function CPF(e) {
 }
 
 export function FormatDate(e) {
-  let data = new Date(e),  
-    dia = data.getDate().toString(),
-    diaF = dia.length === 1 ? "0" + dia : dia,
-    mes = (data.getMonth() + 1).toString(),
-    mesF = mes.length === 1 ? "0" + mes : mes,
-    anoF = data.getFullYear();
-  e = diaF + "/" + mesF + "/" + anoF;
+  if (e.length > 10) {
+    let data = e.substring(0, 10);
+    let dia = data.substring(8, 10);
+    let mes = data.substring(5, 7);
+    let ano = data.substring(0, 4);
+    e = dia + "/" + mes + "/" + ano;
+  }
+  // e = e.replace(/^(\d{2})(\d{2})(\d{4})/, "$1/$2/$3");
   return e;
 }

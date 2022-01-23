@@ -37,6 +37,10 @@ export const Form = styled.form`
   flex-direction: column;
   justify-content: center;
   gap: 0.3rem;
+  height: 20rem;
+  border: 1px solid #fff;
+  margin: 0.2rem 0.3rem 0.2rem 0.8rem;
+  padding: 1.5rem;
 `;
 
 export const FormItem = styled.div`
@@ -65,14 +69,14 @@ export const Button = styled.div`
 
 export const BtnSubmit = styled.input`
   padding: 0.3rem;
-  color: blue;
+  color: #414040;
   background-color: white;
   border-radius: 3px;
   width: 6rem;
 
   &:hover {
     color: white;
-    background-color: blue;
+    background-color: #414040;
   }
 `;
 

@@ -9,8 +9,9 @@ export default function ClientList(props) {
   return (
     <Container>
       <Item onClick={handleClick}>
-        <p>{props.name}</p>
-        <h2>{props.email}</h2>
+        <p> {props.sort < 10 ? "0" + props.sort : props.sort}</p>
+        <h2>{props.name}</h2>
+        <p>{props.email}</p>
       </Item>
     </Container>
   );
