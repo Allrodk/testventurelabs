@@ -6,7 +6,6 @@ import {
   Item,
   List,
   ListItem,
-  Qtd,
 } from "./Styles";
 
 import { useLocation } from "react-router-dom";
@@ -23,7 +22,6 @@ export default function Detail() {
   let indexSet = 0;
 
   async function setData(resp) {
-    console.log(resp.birthDate)
     resp.phone = Phone(resp.phone);
     resp.zipCode = Zipcode(resp.zipCode);
     resp.birthDate = FormatDate(resp.birthDate);
@@ -88,16 +86,24 @@ export default function Detail() {
   }
 
   function handleLast() {
-    indexSet = listClient.length - indexNow - 1;    
+    indexSet = listClient.length - indexNow - 1;
     getData();
   }
 
   return (
     <Container>
-      <Title>
-        <h2>Cliente</h2>
-      </Title>
-      <Main>       
+      <Main>
+        <Title>
+          <div>
+            <h2>Cliente</h2>
+          </div>
+          <div>
+            <p>
+              {"Exibindo "}
+              {indexNow + 1}/{listClient.length}
+            </p>
+          </div>
+        </Title>
         <SubContainer>
           <Item>
             <label>Nome:</label>
@@ -136,7 +142,7 @@ export default function Detail() {
           <Item>
             <label>Renda Mensal:</label>
             <span>{client.rendaMensal}</span>
-          </Item>         
+          </Item>
         </SubContainer>
         <List>
           <ListItem key={1} onClick={handleFirst}>
@@ -153,10 +159,6 @@ export default function Detail() {
           </ListItem>
         </List>
       </Main>
-      <Qtd>
-        {"Exibindo: "}
-        {indexNow + 1}/{listClient.length}
-      </Qtd>
     </Container>
   );
 }

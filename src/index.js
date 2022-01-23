@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { GlobalStyle } from "./styles/global";
 import { Main, Section } from "./IndexStyles";
+import Home from './pages/Home/Home'
 import SideBar from "./components/SideBar/SideBar";
 import Title from "./components/Title/Title";
 import Detail from "./pages/Detail/Detail";
@@ -23,6 +24,7 @@ ReactDOM.render(
         <Section>
           <Title />
           <Routes>
+          <Route path="/" element={<Home />} />
             <Route path="/register" element={<Register />} />
             <Route path="/list" element={<ClientList />} />
             <Route path="/detail" element={<Detail />} />

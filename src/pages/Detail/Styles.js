@@ -8,7 +8,6 @@ export const Container = styled.div`
   width: calc(100vw - 10.5rem);
   margin-top: 3.7rem;
   margin-left: 10.5em;
-
   @media (max-width: 600px) {
     margin-left: 30px;
     width: 100vw;
@@ -16,7 +15,22 @@ export const Container = styled.div`
 `;
 
 export const Title = styled.div`
-  margin: 1rem 0;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  color: #fff;
+  h2 {
+    text-align: center;
+    margin: 1rem 0;
+    font-weight: bold;
+    color: black;
+  }
+  div {
+    text-align: right;
+    p {
+      margin: 0.5rem 1rem;
+    }
+  }
 `;
 
 export const SubContainer = styled.div`
@@ -33,7 +47,7 @@ export const Main = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 2rem;
+  gap: 0.5rem;
   a {
     display: flex;
     align-items: center;
@@ -63,6 +77,7 @@ export const List = styled.ul`
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
+  margin-top: 0.5rem;
   padding: 0.25rem 1.3rem;
   height: 5rem;
   gap: 0.1rem;
@@ -82,8 +97,4 @@ export const ListItem = styled.li`
     background-color: #414040;
     color: #fff;
   }
-`;
-
-export const Qtd = styled.span`
-  margin-top: 2rem;
 `;
